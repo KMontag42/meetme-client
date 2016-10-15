@@ -15,8 +15,8 @@ import HomeView from './components/HomeView';
 import AccountView from './components/AccountView';
 
 const routes = [
-  { component: HomeView, title: 'some title', index: 0 },
-  { component: AccountView, title: 'another title', index: 1 }
+  { Component: HomeView, title: 'some title', index: 0 },
+  { Component: AccountView, title: 'another title', index: 1 }
 ];
 
 export default class meetme extends Component {
@@ -25,18 +25,10 @@ export default class meetme extends Component {
       <Navigator
         initialRoute={routes[0]}
         initialRouteStack={routes}
-        renderScene={(route, navigator) =>
-          <TouchableHighlight onPress={() => {
-            if (route.index === 0) {
-              navigator.push(routes[1]);
-            } else {
-              navigator.pop();
-            }
-          }}>
-            <Text>Hello {route.title}!</Text>
-            {/*{route.component}*/}
-          </TouchableHighlight>
-        }
+        renderScene={ (route, navigator) => {
+          console.log(route.Component);
+          return <route.Component />
+        }}
         navigationBar={
           <Navigator.NavigationBar
             routeMapper={{
@@ -54,11 +46,11 @@ export default class meetme extends Component {
               },
               RightButton: (route, navigator, index, navState) =>
               {
-                if (route.index === 0) {
+                if (route.index != 0) {
                   return null;
                 } else {
                   return (
-                    <TouchableHighlight onPress={() => navigator.pop()}>
+                    <TouchableHighlight onPress={() => navigator.push(routes[route.index+1])}>
                       <Text>Forward</Text>
                     </TouchableHighlight>
                   );
@@ -70,7 +62,6 @@ export default class meetme extends Component {
             style={{backgroundColor: 'gray'}}
           />
         }
-        style={{padding: 100}}
       />
     );
   }
