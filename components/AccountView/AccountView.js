@@ -10,7 +10,7 @@ export default class AccountView extends Component {
     return (
       <View style={Styles.container}>
         <Text style={Styles.welcome}>
-          hi
+          Welcome to the account screen!
         </Text>
       </View>
     )
