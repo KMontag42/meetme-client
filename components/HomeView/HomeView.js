@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import React, { Component, PropTypes } from 'react';
 import {
   View,
@@ -25,7 +29,7 @@ export default class HomeView extends Component {
     return (
       <View style={styles.container}>
         {!this.state.showPicker && <View style={styles.container}>
-          <TouchableHighlight onPress={() => this.setState({showPicker: true})} style={{marginBottom: 25}}>
+          <TouchableHighlight onPress={() => this.setState(Object.assign({}, this.state, {showPicker: true}))} style={{marginBottom: 25}}>
             <View>
               <Icon name="magnet" size={105} color={'#333'}/>
               <Text style={styles.welcome}>Send</Text>
@@ -45,53 +49,35 @@ export default class HomeView extends Component {
               'Phone',
               'Facebook',
               'Instagram',
-              'Twitter'
+              'Twitter',
+              'LinkedIn'
             ]}
             selectedOptions={this.state.options}
             maxSelectedOptions={4}
             onSelection={(option)=>{
               let newState = Object.assign({}, this.state, {optionSelected: true});
-              newState.options.push(option);
+              newState.options.push(option.toLowerCase());
+              newState.options = newState.options.filter((v, i, a) => a.indexOf(v) === i);
               this.setState(newState);
             }}
           />
           {this.state.optionSelected && <TouchableHighlight onPress={() => {
-            this.setState({
-              showPicker: false,
-              optionSelected: false,
-              options: []
-            });
-            this.props.navigator.push(Routes[2]);
+            const route = Object.assign({}, Routes[2], { props: {selected: this.state.options}  })
+            this.props.navigator.push(route);
           }}>
             <Icon name="check" size={52.5} color={'#333'}/>
           </TouchableHighlight>}
-          <TouchableHighlight onPress={() => this.setState({
-            showPicker: false,
-            optionSelected: false,
-            options: []
-          })}>
+          <TouchableHighlight onPress={() => this.setState(
+            Object.assign({}, this.state, {
+              showPicker: false,
+              optionSelected: false,
+              options: []
+            })
+          )}>
             <Icon name="close" size={52.5} color={'#333'}/>
           </TouchableHighlight>
         </View>}
       </View>
-    )
-  }
-}
-
-class PickAccountsModal extends Component {
-  static propTypes = {
-    onRequestClose: React.PropTypes.func.isRequired
-  };
-  render() {
-    return (
-      <Modal
-        animationType={"slide"}
-        transparent={true}
-        visible={true}
-        onRequestClose={this.props.onRequestClose}
-      >
-
-      </Modal>
     )
   }
 }

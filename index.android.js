@@ -20,7 +20,7 @@ export default class meetme extends Component {
       <Navigator
         initialRoute={Routes[0]}
         initialRouteStack={Routes}
-        renderScene={ (route, navigator) => <route.Component navigator={navigator}/>}
+        renderScene={ (route, navigator) => <route.Component navigator={navigator} {...route.props}/>}
         navigationBar={
           <Navigator.NavigationBar
             routeMapper={{
@@ -59,24 +59,5 @@ export default class meetme extends Component {
     );
   }
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: '#F5FCFF',
-//   },
-//   welcome: {
-//     fontSize: 20,
-//     textAlign: 'center',
-//     margin: 10,
-//   },
-//   instructions: {
-//     textAlign: 'center',
-//     color: '#333333',
-//     marginBottom: 5,
-//   },
-// });
 
 AppRegistry.registerComponent('meetme', () => meetme);
