@@ -28,17 +28,14 @@ export default class MeetView extends Component {
       .then(response => response.json())
       .then(responseJSON => {
         const qr = qrcode(10, 'L');
-        const userURL = `https://tkm-mm.herokuapp.com/api/users/${responseJSON.api_hash}?${this.props.selected.map((x) => `&providers[]=${x}`)}`;
+        const providersParam = this.props.selected.map((x) => {return `&providers[]=${x}`}).join('');
+        const userURL = `https://tkm-mm.herokuapp.com/api/users/${responseJSON.api_hash}?${providersParam}`;
         qr.addData(userURL);
         qr.make();
         const base64 = qr.createImgTag().match(/src="(.*?)"/i)[1].replace('gif', 'png');
         this.setState({user: responseJSON, qrCode: base64});
       })
       .catch(error => alert(error))
-  }
-
-  componentDidMount() {
-    // this.getUserQR();
   }
 
   render() {

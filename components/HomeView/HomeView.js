@@ -17,6 +17,9 @@ import MultipleChoice from 'react-native-multiple-choice';
 import Routes from '../../routes'
 
 export default class HomeView extends Component {
+  static propTypes = {
+    user: React.PropTypes.object
+  }
   constructor() {
     super();
     this.state = {
@@ -26,9 +29,11 @@ export default class HomeView extends Component {
     }
   }
   render() {
+    console.log('user',this.props.user);
     return (
       <View style={styles.container}>
         {!this.state.showPicker && <View style={styles.container}>
+          <Text style={styles.welcome}>Hi there {this.props.user.username}!</Text>
           <TouchableHighlight onPress={() => this.setState(Object.assign({}, this.state, {showPicker: true}))} style={{marginBottom: 25}}>
             <View>
               <Icon name="magnet" size={105} color={'#333'}/>
@@ -45,13 +50,7 @@ export default class HomeView extends Component {
         {this.state.showPicker && <View style={styles.container}>
           <MultipleChoice
             style={{marginTop: 105, height: 420, width: 210, marginBottom: 0}}
-            options={[
-              'Phone',
-              'Facebook',
-              'Instagram',
-              'Twitter',
-              'LinkedIn'
-            ]}
+            options={this.props.user.identities.map(i => i.provider)}
             selectedOptions={this.state.options}
             maxSelectedOptions={4}
             onSelection={(option)=>{
