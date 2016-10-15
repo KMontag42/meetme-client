@@ -49,7 +49,9 @@ export default class FindView extends Component {
             visible={true}
             onRequestClose={() => this.setState({showUserModal: false, user: null})}
             >
-            <Text style={Styles.welcome}>{JSON.stringify(this.state.user)}</Text>
+            <View style={Styles.container}>
+              {this.state.user.identities.map(i => <Text style={Styles.welcome}>http://facebook.com/{i.uid}</Text>)}
+            </View>
           </Modal>
         </View>}
       </View>
