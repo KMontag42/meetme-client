@@ -25,10 +25,17 @@ export default class HomeView extends Component {
     return (
       <View style={styles.container}>
         {!this.state.showPicker && <View style={styles.container}>
-          <Text style={styles.welcome}>Hi!</Text>
-          <Text style={styles.welcome}>Get Ready to Navigate!</Text>
-          <TouchableHighlight onPress={() => this.setState({showPicker: true})}>
-            <Icon name="magnet" size={210} color={'#333'}/>
+          <TouchableHighlight onPress={() => this.setState({showPicker: true})} style={{marginBottom: 25}}>
+            <View>
+              <Icon name="magnet" size={105} color={'#333'}/>
+              <Text style={styles.welcome}>Send</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => this.props.navigator.push(Routes[3])}>
+            <View>
+              <Icon name="binoculars" size={105} color={'#333'}/>
+              <Text style={styles.welcome}>Find</Text>
+            </View>
           </TouchableHighlight>
         </View>}
         {this.state.showPicker && <View style={styles.container}>
