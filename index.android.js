@@ -37,7 +37,8 @@ export default class meetme extends Component {
                 } else {
                   return (
                     <TouchableHighlight onPress={() => navigator.pop()}>
-                      <Icon name="chevron-left" size={30} color="#eee"/>
+                      <Icon name="chevron-left" size={30} color="#eee"
+                            style={{padding: 10}}/>
                     </TouchableHighlight>
                   );
                 }
@@ -49,7 +50,8 @@ export default class meetme extends Component {
                 }
                 return (
                   <TouchableHighlight onPress={() => navigator.push(routes[1])}>
-                    <Icon name="user" size={30} color="#eee"/>
+                    <Icon name="user" size={30} color="#eee"
+                          style={{padding: 10}}/>
                   </TouchableHighlight>
                 );
               },
