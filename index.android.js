@@ -11,22 +11,16 @@ import {
   Text,
   Navigator
 } from 'react-native';
-import HomeView from './components/HomeView';
-import AccountView from './components/AccountView';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-const routes = [
-  { Component: HomeView, title: 'some title', index: 0 },
-  { Component: AccountView, title: 'another title', index: 1 }
-];
+import Routes from './routes';
 
 export default class meetme extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={routes[0]}
-        initialRouteStack={routes}
-        renderScene={ (route, navigator) => <route.Component />}
+        initialRoute={Routes[0]}
+        initialRouteStack={Routes}
+        renderScene={ (route, navigator) => <route.Component navigator={navigator}/>}
         navigationBar={
           <Navigator.NavigationBar
             routeMapper={{
@@ -49,14 +43,14 @@ export default class meetme extends Component {
                   return null;
                 }
                 return (
-                  <TouchableHighlight onPress={() => navigator.push(routes[1])}>
+                  <TouchableHighlight onPress={() => navigator.push(Routes[1])}>
                     <Icon name="user" size={30} color="#eee"
                           style={{padding: 10}}/>
                   </TouchableHighlight>
                 );
               },
               Title: (route, navigator, index, navState) =>
-              { return (<Text>Awesome Nav Bar</Text>); },
+              { return (<Text style={{color: '#eee'}}></Text>); },
             }}
             style={{backgroundColor: 'gray'}}
           />
