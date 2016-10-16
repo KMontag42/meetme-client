@@ -7,9 +7,11 @@ import {
   View,
   Text,
   TouchableHighlight,
-  Modal
+  Modal,
+  Linking
 } from 'react-native';
 import QRCodeScreen from '../../lib/QRCodeScreen';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Styles from '../../Styles';
 
 export default class FindView extends Component {
@@ -50,7 +52,19 @@ export default class FindView extends Component {
             onRequestClose={() => this.setState({showUserModal: false, user: null})}
             >
             <View style={Styles.container}>
-              {this.state.user.identities.map(i => <Text style={Styles.welcome}>http://facebook.com/{i.uid}</Text>)}
+              {this.state.user.identities.map(i => <View style={Styles.container} key={i.provider}>
+                <TouchableHighlight onPress={() => {
+                  return Linking.canOpenURL(i.provider_account_url).then(supported => {
+                    if (!supported) {
+                      console.log('Can\'t handle url: ' + i.provider_account_url);
+                    } else {
+                      return Linking.openURL(i.provider_account_url);
+                    }
+                  }).catch(err => console.error('An error occurred', err));
+                }}>
+                  <Icon name={i.provider} size={420/10} color="#333"/>
+                </TouchableHighlight>
+              </View>)}
             </View>
           </Modal>
         </View>}
